@@ -1,0 +1,22 @@
+{
+    "frames_path": "your/frames/folder/path",
+    "faces_output_path": "your/output/folder/path",
+    "create_model_folder": true,
+    "local_detection": {
+        "use_local": false,
+        "model": "hog",
+        "upscale_factor": 1,
+        "number_of_times_to_upsample": 1
+    },
+
+    "yolo_detection": {
+        "use_yolo": false,
+        "yolo_model_path": "your/yolo/model/path/model.pt"
+    },
+
+    "api_detection": {
+        "use_api": false,
+        "api_service": null,
+        "api_credentials_path": null
+    }
+}
