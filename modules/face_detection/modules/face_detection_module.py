@@ -2,6 +2,7 @@ import os
 import json
 import time
 from datetime import datetime
+
 import cv2
 import face_recognition
 from huggingface_hub import hf_hub_download
@@ -9,10 +10,11 @@ from ultralytics import YOLO
 from supervision import Detections
 from PIL import Image
 
+
 def detect_faces_yolo(frame, model_path=None):
-    """Detecta rostos usando o modelo YOLOv8."""
+    """Detect faces using YOLOv8 model."""
     if model_path is None:
-        # Baixa o modelo YOLOv8 da Hugging Face se o caminho do modelo não for fornecido
+        # Download YOLOv8 model from Hugging Face if model path is not provided
         model_path = hf_hub_download(repo_id="arnabdhar/YOLOv8-Face-Detection", filename="model.pt")
     
     model = YOLO(model_path)
@@ -24,22 +26,25 @@ def detect_faces_yolo(frame, model_path=None):
     for box in detections.xyxy:
         top, left, bottom, right = int(box[1]), int(box[0]), int(box[3]), int(box[2])
         face_locations.append({"top": top, "right": right, "bottom": bottom, "left": left})
-    return face_locations, "yolov8-fine"  # Retorna também o tipo do modelo
+    return face_locations, "yolov8-fine"  # Also returns model type
+
 
 def detect_faces_local(frame, detection_parameters):
-    """Detecta rostos usando o modelo local com parâmetros especificados."""
+    """Detect faces using a local model with specified parameters."""
     rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     model = detection_parameters.get("model", "hog")
     upscale_factor = detection_parameters.get("number_of_times_to_upsample", 1)
     face_locations = face_recognition.face_locations(rgb_frame, number_of_times_to_upsample=upscale_factor, model=model)
     return [{"top": loc[0], "right": loc[1], "bottom": loc[2], "left": loc[3]} for loc in face_locations], model
 
+
 def detect_faces_api(frame, api_service, api_credentials):
-    """Placeholder para a detecção usando API externa."""
-    return [{"top": 50, "right": 100, "bottom": 150, "left": 75}], "api"  # Retorna também o tipo do modelo
+    """Placeholder for detection using an external API."""
+    return [{"top": 50, "right": 100, "bottom": 150, "left": 75}], "api"  # Also returns model type
+
 
 def process_frame(frame, config):
-    """Processa um frame para detectar rostos conforme o método especificado."""
+    """Process a frame to detect faces according to the specified method."""
     local_detection = config.get("local_detection", {})
     yolo_detection = config.get("yolo_detection", {})
     api_detection = config.get("api_detection", {})
@@ -58,14 +63,15 @@ def process_frame(frame, config):
                 api_credentials = json.load(f)
         return detect_faces_api(frame, api_service, api_credentials)
     else:
-        raise ValueError("Nenhum método de detecção foi ativado.")
+        raise ValueError("No detection method was activated.")
+
 
 def process_all_frames(config, utils):
     frames_path = config.get("frames_path")
     faces_output_path = config.get("faces_output_path")
     create_model_folder = config.get("create_model_folder", False)
     
-    # Define o nome da pasta de saída com base no método e no modelo
+    # Define output folder name based on the detection method and model
     if create_model_folder:
         if config["yolo_detection"].get("use_yolo"):
             model_name = "yolov8-fine"
@@ -86,22 +92,23 @@ def process_all_frames(config, utils):
                 frame_path = os.path.join(root, frame_file)
                 frame = cv2.imread(frame_path)
                 
-                # Início da medição do tempo de processamento
+                # Start timing the processing
                 start_time = time.time()
 
-                # Processa o frame e obtém as detecções junto com o tipo de modelo
+                # Process the frame and get detections along with model type
                 face_locations, model_type = process_frame(frame, config)
                 
-                # Fim da medição do tempo de processamento
+                # End timing the processing
                 processing_time = time.time() - start_time
 
-                # Calcula metadados do frame
+                # Frame metadata
                 height, width = frame.shape[:2]
                 frame_number = int(os.path.splitext(frame_file)[0].split('_')[-1])
 
-                # Estrutura enriquecida para o resultado de saída
+                # Enhanced output structure
                 detection_result = {
                     "frame_file": frame_file,
+                    "absolute_image_path": utils['format_path_for_json'](frame_path),
                     "timestamp": datetime.now().isoformat(),
                     "detection_method": model_type,
                     "num_faces_detected": len(face_locations),

@@ -55,7 +55,8 @@ def load_config(json_path=None):
 def main(json_path=None):
     params = load_config(json_path)
     utils_functions = {
-        'ensure_directory': utils.ensure_directory
+        'ensure_directory': utils.ensure_directory,
+        'format_path_for_json': utils.format_path_for_json
     }
     face_detection_module.process_all_frames(params, utils=utils_functions)
 
