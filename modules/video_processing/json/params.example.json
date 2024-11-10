@@ -1,0 +1,9 @@
+{
+    "input_videos_path": "your/input/video/folder/path",
+    "frames_path": "your/output/frames/folder/path",
+    "frame_rate": 10,
+    "use_video_fps": true,
+    "interval_in_seconds": 5,
+    "use_frame_number_as_name": true,
+    "allowed_extensions": [".mp4", ".avi", ".mov", ".webm"]
+}
