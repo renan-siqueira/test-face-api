@@ -1,0 +1,6 @@
+{
+    "reference_dataset_path": "your/path/here",
+    "detection_results_path": "your/path/here",
+    "association_output_path": "your/path/here",
+    "similarity_threshold": 0.6
+}
