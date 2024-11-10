@@ -1,0 +1,6 @@
+{
+    "association_results_path": "your/root/path/data/association_results",
+    "reports_output_path": "your/root/path/data/reports",
+    "csv_filename": "detection_report.csv",
+    "json_filename": "detection_report.json"
+}
