@@ -12,7 +12,9 @@ def load_config_from_py():
             "reference_dataset_path": getattr(config, "APP_PATH_REFERENCE_DATASET", None),
             "detection_results_path": getattr(config, "APP_PATH_DETECTION_RESULTS", None),
             "association_output_path": getattr(config, "APP_PATH_ASSOCIATION_OUTPUT", None),
-            "similarity_threshold": getattr(config, "APP_PARAMETER_SIMILARITY_THRESHOLD", 0.6)
+            "similarity_threshold": getattr(config, "APP_PARAMETER_SIMILARITY_THRESHOLD", 0.6),
+            "resize_reference_images": getattr(config, "APP_PARAMETER_RESIZE_REFERENCE_IMAGES", False),
+            "resize_factor": getattr(config, "APP_PARAMETER_RESIZE_FACTOR", 1.0)
         }
         if None in config_dict.values():
             missing_keys = [k for k, v in config_dict.items() if v is None]
