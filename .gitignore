@@ -4,6 +4,7 @@ __pycache__
 
 credentials
 data
+models
 
 *config.py
 *params.json

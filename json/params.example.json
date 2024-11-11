@@ -1,0 +1,7 @@
+{
+    "video_processing_module": "your/path/here",
+    "face_detection_module": "your/path/here",
+    "data_association_module": "your/path/here",
+    "report_generation_module": "your/path/here",
+    "main_script_name": "main.py"
+}
