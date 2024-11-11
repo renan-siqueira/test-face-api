@@ -41,7 +41,8 @@ def load_config(json_path=None):
 def main(json_path=None):
     params = load_config(json_path)
     utils_functions = {
-        'ensure_directory': utils.ensure_directory
+        'ensure_directory': utils.ensure_directory,
+        'format_path_for_json': utils.format_path_for_json
     }
     video_processing_module.process_videos(params, utils=utils_functions)
 
