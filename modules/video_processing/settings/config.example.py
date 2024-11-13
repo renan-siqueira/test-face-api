@@ -1,7 +1,7 @@
 import os
 
 # Root path of the project
-APP_PATH_ROOT = 'your/root/project/path'
+APP_PATH_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
 
 # Specific paths
 APP_PATH_DATA = os.path.join(APP_PATH_ROOT, 'data')

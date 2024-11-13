@@ -2,7 +2,7 @@ import os
 
 
 # Path to the root of the project (adjust as necessary)
-APP_PATH_ROOT = 'your/root/folder/path'
+APP_PATH_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
 
 # Paths to directories
 APP_PATH_MODELS = os.path.join(APP_PATH_ROOT, 'models')

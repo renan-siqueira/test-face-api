@@ -1,7 +1,7 @@
 import os
 
-# Path settings
-APP_PATH_ROOT = 'your/root/path/folder'
+APP_PATH_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+
 APP_PATH_VENV = os.path.join(APP_PATH_ROOT, '.venv')
 APP_PATH_MODULES = os.path.join(APP_PATH_ROOT, 'modules')
 
